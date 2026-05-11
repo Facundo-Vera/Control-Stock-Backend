@@ -1,6 +1,46 @@
 import Sales from "../models/Sales.js";
 import Product from "../models/Product.js";
 
+const getOneSale = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const sale = await Sales.findById(id);
+
+    if (!sale) {
+      return res.status(404).json({
+        ok: false,
+        message: "Venta no encontrada",
+      });
+    }
+
+    res.status(200).json({
+      ok: true,
+      sale,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      message: "Error al obtener venta",
+    });
+  }
+};
+
+const getSales = async (req, res) => {
+  try {
+    const sales = await Sales.find();
+
+    res.status(200).json({
+      ok: true,
+      sales,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      message: "Error al obtener ventas",
+    });
+  }
+};
 
 const createSale = async (req, res) => {
   try {
@@ -22,9 +62,7 @@ const createSale = async (req, res) => {
         }
 
         if (product.stock < item.quantity) {
-          throw new Error(
-            `Stock insuficiente para ${product.name}`,
-          );
+          throw new Error(`Stock insuficiente para ${product.name}`);
         }
 
         product.stock -= item.quantity;
@@ -58,4 +96,4 @@ const createSale = async (req, res) => {
   }
 };
 
-export { createSale };
+export { createSale, getOneSale ,getSales};
