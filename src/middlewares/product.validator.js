@@ -6,8 +6,8 @@ export const validateCreateProduct = [
   check("name")
     .notEmpty()
     .withMessage("El nombre del producto es requerido")
-    .isLength({ min: 3 })
-    .withMessage("El nombre debe tener al menos 3 caracteres"),
+    .isLength({ min: 3,  max: 50 })
+    .withMessage("El nombre debe tener entre 3 y 50 caracteres"),
 
   check("price")
     .notEmpty()
