@@ -39,3 +39,11 @@ export const validateCreateProduct = [
 
     handleValidationErrors,
 ];
+
+export const validateDeleteProduct = [
+  check("id")
+    .isMongoId()
+    .withMessage("ID de producto inválido"),
+
+  handleValidationErrors,
+];
